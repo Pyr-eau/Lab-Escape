@@ -49,6 +49,7 @@ namespace TextBasedAdventure
             switch (playerchoice)
             {
                 case 1: DrawAction("You leave Lab Room 19 and enter the hallway");
+                    Hallway();
                     break;
                 case 2: AddtoINV(APPLE);
                         Lab19();
@@ -68,6 +69,54 @@ namespace TextBasedAdventure
             }
 
             }
+          public void Hallway() 
+  {
+      string name = "Hallway";
+      string desc = "The facility's hallway, you see doors line the walls, Lab Room 18 and the storage room\n" +
+                      "stand out to you, the rest of the doors have runny, red liquid running underneath themselves,\n" +
+                      "at the end of the hallway lie the elevator and stairs which could take you up and down the facility. It's quiet.\n" +
+                      "You are alone.";
+      List<string> actions = new List<string>
+      {
+          "Go back to Lab Room 19",
+          "Use the door to Lab Room 18",
+          "Use the door to Storage Room",
+          "Use the elevator",
+          "Check pockets"
+      };
+      DrawRoom(name, desc, actions);
+      int playerChoice = GetPlayerChoice(actions.Count);
+      Console.Clear();
+
+      switch (playerChoice) 
+      {
+          case 1:
+              DrawAction("You turn towards your labroom door, but you peek the gas seeping through underneath, it's best not to reenter.");
+              Hallway();
+              break;
+          case 2: DrawAction("You enter Lab Room 18");
+              //draw room 18
+              break;
+          case 3: DrawAction("You enter the storage room");
+              //draw storage room
+              break;
+          case 4: DrawAction("You enter the elevator");
+              //draw elevator
+              if (INV.Contains(LVL3CARD)) {
+                  DrawAction("You swipe a Level 2 access card into the lift\n" +
+                  "the button to the top floor is out of order, but you should make it from the floor above."); }
+              else {
+                  DrawAlert("The elevator has an ID scanner, you must've left yours in your labroom.");
+                      Hallway(); }
+              break;
+          case 5: DrawAction("You scan the hallway, all you see is more hallway.");
+              Hallway();
+                  break;
+          case 6: ShowINV();
+              Hallway();
+              break;
+      }
+  }
         public void DrawRoom(string name, string desc, List<string> actions)
         {
             Cn();
@@ -166,3 +215,4 @@ namespace TextBasedAdventure
 
     }
 }
+
